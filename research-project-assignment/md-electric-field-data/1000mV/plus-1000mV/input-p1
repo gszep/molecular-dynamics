@@ -1,0 +1,47 @@
+# EFIELD
+efield   on
+##(for 1V with Z=94.36A E=0.244)
+# 250 mV for z=86.671 E=-0.0665
+# -100 mV
+efieldvector 0.0 0.0  0.2658
+efieldphase 0.0
+efieldfrequency 0.0
+
+set temperature 300 
+set structure ompf-popc-water-02MKCl-eq
+set output run-nvt-100ns
+
+amber on
+parmfile        $structure.parm7
+coordinates     $structure.pdb
+temperature	$temperature
+
+celldimension  107.888 107.888 86.671
+
+run             25000000
+restart         off
+restartfreq     12500
+outputname      $output
+dcdfile         $output.dcd
+dcdfreq         12500
+#wrap            all
+energyfreq      250
+
+timestep           4
+hydrogenscale      4
+fullelectfrequency 2
+rigidbonds      all 
+switching       on
+switchdist      7.5
+cutoff          9
+exclude         scaled1-4 
+1-4scaling      0.833333
+
+pme on
+pmegridsizex  96
+pmegridsizey  96
+pmegridsizez  80
+
+langevin                on
+langevindamping         0.1
+langevintemp            $temperature

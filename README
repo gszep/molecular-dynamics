@@ -1,0 +1,85 @@
+#################################################################
+#
+# You will find informations about the content of the directories
+# of this USB key
+#
+#################################################################
+
+2. research-project-assignment -> it contains all the raw data of molecular dynamics
+   			       	  simulations you are supposed to analyse
+
+   2.1 umbrella-sampling-data -> it contains two directories (one for each system)
+       			      	 with the raw data of umbrella sampling simulations
+
+       2.1.1 helix1_pulling_umbrella -> it contains the umbrella sampling simulations
+       	     			     	for the peptide having stating conformational state
+					in alpha-helix
+
+       2.1.2 hairpin1_pulling_umbrella -> it contains the umbrella sampling simulations
+                                          for the peptide having stating conformational state
+				       	  in beta-hairpin 
+   
+   2.2 md-electric-field-data -> it contains three directories with the raw data of non equilibrium
+       			      	 molecular dynamics simulations with different applied voltages
+				 across the box simulation
+
+       2.2.1 100mV -> simulations with applied voltage of +/- 100 mV
+
+       2.2.2 200mV -> simulations with applied voltage of +/- 200 mV
+
+       2.2.3 1000mV -> simulations with applied voltage of +/- 1000 mV
+
+##############################################################
+#
+# Some NOTES about the use of the pipeline for the analysis of
+# the simulation with applied voltage
+#
+##############################################################
+
+1. In every directory you will find files called
+   100ns-prot.dcd
+   200ns-prot.dcd
+   300ns-prot.dcd
+   ...
+   100, 200 and 300 are labels of the different replicas ran by Prof. Ceccarelli and collaborators having
+   the following meaning
+   100 -> 1st replica
+   200 -> 2nd replica
+   300 -> 3rd replica and so on
+
+2. In every directory with the data of non-equilibrium MD simulations with applied voltage there are the following
+   executables:
+
+   1. script-ions
+   2. script-flux
+   3. script-curr
+
+   These executables are supposed to be considered black boxes that do the following:
+   1. script-ions
+      input: input.idx, 100ns-prot.dcd
+      output: 100ns-ions.out
+      it reads the dcd file 100ns-prot.dcd and it writes the file with the positions of the ions-> file 100ns-ions.out
+
+   2. script-flux
+      input: input.idx, 100ns-ions.out
+      output: at screen and files fort.20/21/22/23 with all the time of passage of each ion through the channel
+      it reads all the positions of the ions and it analyses the passages of the ions writing as well the average time of passage
+
+   3. script-curr
+      input: input.idx, 100ns-ions.out
+      output: 100ns-q.out
+      it reads the positions of the ions and it writes the charge (passed through the channel) as a function of the time
+      The script assumes the voltage is in V (Volt) and the current in A (Ampere) so that you can calculate the conductance in Siemens! 
+
+
+In the file input.idx you are supposed to change only the first line!
+Remember:
+100 is just a label that makes the script understanding that is supposed to use the input file 100ns-prot.dcd!!!!!!!!!!
+
+100 -> 1st Replica
+200 -> 2nd Replica
+300 -> 3rd Replica
+
+
+
+Good Luck
