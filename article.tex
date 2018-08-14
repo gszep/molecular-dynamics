@@ -33,7 +33,6 @@
 \setlist{leftmargin=*,before=\setlength{\rightmargin}{\leftmargin}}
 %-figure layout options
 
-
 \providecommand\citet{\cite}
 \providecommand\citep{\cite}
 \providecommand\citealt{\cite}
@@ -41,6 +40,7 @@
 \makeatletter
 \makeatother
 
+\def\code#1{\texttt{#1}}
 \begin{document}
 
 \title{
@@ -62,112 +62,94 @@ quantitatively with precision-recall metrics obtained by comparing the
 instrument prediction from a segment of audio to the ground truth obtained
 from musical scores, and qualitatively by generating samples of audio for given
 regions in the latent space.}
-\section{Methodology Outline}
-\subsection{Mapping time-series to latent space}
-The input data are single channel time-series points $\mathcal{D}=\{x(t_1)\dots
-x(t_N)\}$ sampled at frequency $f$ from an underlying continuous state-time
-process $x(t)$, that is the oscillating sound waves emitted by a live orchestra.
-\subsubsection{Wavelet transforms and independent components}
-\begin{enumerate}
-	\item get spectrogram using windowed Fourier transform or Gabor transforms,
-	discuss spectral leakage, contrast, normalisation and noise filtering in an
-	unsupervised way
-	\item perform principal components and independent component dimensionality
-	reduction along frequency dimension, discuss differences between them.
-\end{enumerate}
-\subsubsection{Markov models and expectation-maximisation}
-\begin{enumerate}
-	\item discuss implementations of random Markov fields in image segmentation
-	and how they can be adapted to audio segmentation
-	\item random Markov field vs hidden Markov model?
-	\item expectation-maximisation vs error back-propagation
-\end{enumerate}
+\section{scientific publication}
+Select a scientific publication about non-equilibrium molecular dynamics of
+biomolecules and discuss its relevance respect to the course you attended and
+this research assignment.
 
-\subsubsection{Feature extraction with causal convolutions}
-Convolutional architectures have become popular due to their ability to compress spatio-temporal
-information for discrimination and generation tasks \cite{Oord2016PixelNetworks,GoodfellowGenerativeNets}.
-A causal convolutional network \cite{Oord2016WaveNet:Audio} --- which encodes the arrow of time in
-its architecture --- is trained for the audio segmentation task.
-\begin{enumerate}
-	\item dilated causal convolutions as a merge between a feature
-	extractor and a dimensionality reduction technique. This is a supervised method
-	\item Compare clusters to those obtained in Section 1.1.1
-\end{enumerate}
-\subsection{Clustering in latent space}
-\begin{enumerate}
-	\item We have a hierarchical clustering problem: there are 11 instruments each
-	of which can play 28-83 notes. The easier problem is to only cluster instruments,
-	the harder problem is to cluster both instruments and notes.
-\end{enumerate}
+\section{Analysis of Umbrella Sampling simulations}
+Every student has access to the raw data of umbrella sampling simulations for
+two systems. These umbrella sampling simulations have been ran having the
+aim to calculate the Potential of Mean Force (PMF) of the mechanical unfolding
+of two peptides: one being in the initial conformational state of an a-helix; the
+other being in the initial conformational state of a b-hairpin. Every student is
+supposed to calculate the PMF for both the systems
+\subsection{Describe the simulated systems and the type of performed simulations you
+analyze}
+\subsection{Calculate and display (plot) the PMF for the two systems. Explore the
+relevance of the bootstrap parameter respect to evaluation of the PMF’s error
+using the script g_wham_script_new.x}
 
-\subsubsection{K-means}
-\begin{enumerate}
-	\item Since we know how many instruments there are, we can apply a naive K-means
-	and see what happens. Here the disadvantage is that time-ordering may be
-	ignored, which can lead to noisy/discontinuous audio segment classifications
-	\item Discuss de-noising strategies in post-classification: possibly Markov
-	random fields from section 1.1.2?
-\end{enumerate}
+Bootstrapping is a resampling method that quantifies statistical uncertainty by
+dividing the data into $N$ subsets, hence without additional measruements
+uncertainty is obtained by \textit{pulling the data up by its own bootstraps}.
+By default the \code{g\_wham} code forms subsets with replacement over the
+complete histograms along the reaction coordinate \cite{gwham2010}, leaving us
+with $N$ as a hyperparameter.
+\\\\
+This hyperparameter is subject to the bias-variance trade-off. Chooseing a large
+$N$ results in relatively unbiased and uncertain estimates, while a small number
+of subsets give rise to more certain yet biased estimates. The former is
+preferred but comes with a computational cost. It appears that the uncertainty
+bounds converge to a fixed value after around $N\geq20$ so there is little sense
+in setting $N$ at any other value than $N=20$.
 
-\subsubsection{Fully convolutional networks}
-\begin{enumerate}
-	\item I shall attempt to adapt the the fully convolutional architecture \cite{Long2015}
-	for the audio segmentation task. Discuss advantages of end-to-end trained solution.
-\end{enumerate}
+\subsection{Quantify and discuss the histograms’ overlap as
+obtained from the analysis of the umbrella sampling simulations}
 
-\subsection{Evaluation methods}
-\subsubsection{Audio segment retrieval}
-\begin{enumerate}
-	\item outline of object detection / segmentation in image analysis
-	\item precision-recall metric applied to audio
-\end{enumerate}
-\subsubsection{Instrument generation}
-\begin{enumerate}
-	\item introduction to encoder / decoder pipelines as generative models which
-	can produce data given activation of input in latent space.
-	\item attempt to produce sounds that are interpolations between
-	existing instruments, assess qualitatively how realistic they sound
-\end{enumerate}
+\section{Conductance of outer membrane protein F}
+Outer membrane protein F (ompF) is present in E. Coli
 
 
+Every student has access to the raw data of non-equilibrium molecular
+dynamics simulations with an external electric field switched on. This set up
+corresponds in having a specific applied voltage across the simulation box.
+These non-equilibrium molecular dynamics simulations have been ran having
+the aim to test/check if this type of simulations are able to reproduce the
+feature of the protein OMPF of being weakly cationic selective in salts of
+monovalent cations (K+,Cl-).
 \begin{figure}[H]
-\centering{}
-\captionsetup{justification=centering}
-\includegraphics[scale=0.5]{methods}
-\caption{Summary of methodology showing all stages of the audio segmentation task.\\
-Each transition between sub-figures can be achieved with appropriate algorithms
-}
-\label{fig:methods}
+	\centering{}
+	\captionsetup{justification=centering}
+	\includegraphics[scale=0.5]{ompf}
+\caption{Side-view of structure: three $\beta$-barrels transmembrane channel.\\
+Highlighted are charged residues, which dominanate the outer membrane side.}
+\label{fig:ompF}
 \end{figure}
 
-\section{Dataset Description}
+Every student will find raw data for the following applied voltages: ±100mV,
+±200mV, ±1000mV.
+For ±100mV: every student will have only 1 trajectory to analyse (the file dcd).
+For ±200mV: every student will have 6 trajectories to analyse (the file dcd).
+For ±1000mV: every student will have 3 trajectories to analyse (the file dcd).
+Every student is supposed to follow the pipeline of analysis
+proposed/provided during the tutorial that permits to estimate the relevant
+properties of interest of the system. Read carefully the file README before to
+start the analysis!
+Calculate and discuss ion flux through the channel as well as its conductance,
+putting the results in relation with the current literature.
+\begin{figure}[H]
+	\centering{}
+	\captionsetup{justification=centering}
+	\includegraphics[scale=0.5]{conductance}
+\caption{Conductance estimates $G$ for anions and cations across\\ outer membrane
+protein F (ompF) under various applied voltages $V$ }
+\label{fig:conductance}
+\end{figure}
 
-\subsection{Input and Labels}
-\begin{enumerate}
-	\item small summary table of the MusicNet dataset \cite{Thickstun2016LearningScratch}, advantages
-	over EEG and other bio-sensory data for bench-marking signal processing algorithms
-	\item raw labels are time aligned transcripts of the sheet music. How to we
-	parse that into instrument activations and note activations.
-	\item cross-validation --- if any
-\end{enumerate}
-
-\subsection{Data Partitioning}
-\begin{enumerate}
-	\item test, validation and train sets
-	\item cross-validation --- if any
-\end{enumerate}
-
-\section{Results, Protocols and Conclusions}
-\begin{enumerate}
-	\item all relevant figures will be presented here
-	\item all code will be documented on GitHub repo [https://github.com/gszep/sound-detection]
-\end{enumerate}
-\subsection{Learned feature maps}
-
-\subsection{Clustering performance}
-
-\subsection{Generating instruments}
-
+\begin{figure}[H]
+	\centering{}
+	\captionsetup{justification=centering}
+	\includegraphics[scale=0.5]{ompf-charges}
+\caption{Single ompF $\beta$-barrel from inner membrane side, highlighting
+positive  $\mathrm{COOH}$  (red) \\and negative $\mathrm{NH_2}$ (blue) partial charged groups that facilitate cationic selectivity}
+\label{fig:ompF-charges}
+\end{figure}
+The student is supposed to address all the points of the assignment described above,
+but has the freedom to focus in discussing details of methodology and selected
+approaches either to the “Analysis of Umbrella Sampling Simulations” or to the
+“Analysis of the non-equilibrium molecular dynamics simulations with external electric
+field”.
 \bibliography{mendeley_v2}
 \bibliographystyle{ieeetr}
 \end{document}

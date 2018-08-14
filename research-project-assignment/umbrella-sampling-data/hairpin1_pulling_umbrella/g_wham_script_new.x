@@ -1,10 +1,10 @@
 #!/bin/bash
 #
 let k=1
-let nst=20
-let nBootstrap=20
+let nst=21
+let nBootstrap=$1
 #
-g_wham=g_wham_d
+g_wham=g_wham
 #
 rm tpr-files.dat
 rm pullf-files.dat
