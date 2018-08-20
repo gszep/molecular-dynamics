@@ -52,22 +52,13 @@ Time-series segmentation and latent\\ representation of musical instruments
 \date{\today}
 \maketitle
 
-\abstract{Music information retrieval tasks serve as faithful benchmarks for
-time-series analysis pipelines due to the availability of strongly labelled
-training data such as MusicNet. Clustering algorithms in spectral sub-spaces,
-hidden Markov models and causal convolutional neural networks are compared in
-their ability to transform time-series to a continuous latent space that
-clusters eleven orchestral instruments. The latent space is evaluated
-quantitatively with precision-recall metrics obtained by comparing the
-instrument prediction from a segment of audio to the ground truth obtained
-from musical scores, and qualitatively by generating samples of audio for given
-regions in the latent space.}
+\abstract{dd}
 \section{scientific publication}
 Select a scientific publication about non-equilibrium molecular dynamics of
 biomolecules and discuss its relevance respect to the course you attended and
 this research assignment.
 
-\section{Analysis of Umbrella Sampling simulations}
+\section{Unfolding proteins with umbrella sampling}
 Every student has access to the raw data of umbrella sampling simulations for
 two systems. These umbrella sampling simulations have been ran having the
 aim to calculate the Potential of Mean Force (PMF) of the mechanical unfolding
@@ -96,60 +87,75 @@ in setting $N$ at any other value than $N=20$.
 
 \subsection{Quantify and discuss the histograms’ overlap as
 obtained from the analysis of the umbrella sampling simulations}
-
-\section{Conductance of outer membrane protein F}
-Outer membrane protein F (ompF) is present in E. Coli
-
-
-Every student has access to the raw data of non-equilibrium molecular
-dynamics simulations with an external electric field switched on. This set up
-corresponds in having a specific applied voltage across the simulation box.
-These non-equilibrium molecular dynamics simulations have been ran having
-the aim to test/check if this type of simulations are able to reproduce the
-feature of the protein OMPF of being weakly cationic selective in salts of
-monovalent cations (K+,Cl-).
+\pagebreak
+\section{Conductance of a porin}
+\vspace{-5pt}
+\subsection{Structure and function}
+Porins are $\beta$-barrel transmembrane proteins that act as a pore through
+which molecules can diffuse. Outer membrane protein F (ompF) is a nonspecific
+weakly cationic selective porin found in \textit{E. Coli} \cite{Novikova2009}.
+It is nonspecific in the sense that there is no preference for a particular
+chemical species, however it does exhibit weak selective permeability for
+cations.
 \begin{figure}[H]
 	\centering{}
 	\captionsetup{justification=centering}
 	\includegraphics[scale=0.5]{ompf}
-\caption{Side-view of structure: three $\beta$-barrels transmembrane channel.\\
-Highlighted are charged residues, which dominanate the outer membrane side.}
+\caption{Side-view of ompF: $\beta$-barrel homotrimer forms transmembrane channel.\\
+Highlighted are polar residues, which dominanate the outer membrane side.}
 \label{fig:ompF}
-\end{figure}
-
-Every student will find raw data for the following applied voltages: ±100mV,
-±200mV, ±1000mV.
-For ±100mV: every student will have only 1 trajectory to analyse (the file dcd).
-For ±200mV: every student will have 6 trajectories to analyse (the file dcd).
-For ±1000mV: every student will have 3 trajectories to analyse (the file dcd).
-Every student is supposed to follow the pipeline of analysis
-proposed/provided during the tutorial that permits to estimate the relevant
-properties of interest of the system. Read carefully the file README before to
-start the analysis!
-Calculate and discuss ion flux through the channel as well as its conductance,
-putting the results in relation with the current literature.
-\begin{figure}[H]
-	\centering{}
-	\captionsetup{justification=centering}
-	\includegraphics[scale=0.5]{conductance}
-\caption{Conductance estimates $G$ for anions and cations across\\ outer membrane
-protein F (ompF) under various applied voltages $V$ }
-\label{fig:conductance}
-\end{figure}
-
+\end{figure}\noindent
+Figure \ref{fig:ompF} shows the structure of ompF: antiparallel $\beta$-strands
+forming three barrels that interact locally with neighboring $\beta$-strands, a
+long loop inserts into each barrel resulting in channel narrowing, charged
+residues form clusters at the entrance to a pore on the outer membrane side as
+well as within the narrow channel zone.
+\\\\
+The narrowing geometry prevents larger potentially harmful molecules such as
+detergents from diffusing across the membrane, while allowing small hydrophilic
+molecules involved in bacterial metabolism to pass. Charged residues in the
+narrowing region of each barrel influence the ion selectivity and permeability
+of the channel. Two clusters of oppositely charged residues as shown in Figure
+\ref{fig:ompF-charges} generate a screw-like electric field twisted along the
+channel axis with a strong transverse component in the pore narrowing region
+\cite{Novikova2009}. This field favors cations to pass through the channel.
 \begin{figure}[H]
 	\centering{}
 	\captionsetup{justification=centering}
 	\includegraphics[scale=0.5]{ompf-charges}
-\caption{Single ompF $\beta$-barrel from inner membrane side, highlighting
-positive  $\mathrm{COOH}$  (red) \\and negative $\mathrm{NH_2}$ (blue) partial charged groups that facilitate cationic selectivity}
+\caption{ompF $\beta$-barrel from inner membrane side having residues with
+positive \\ $\color{red}{\mathrm{COOH}}$ and negative $\color{blue}{\mathrm{NH_2}}$ partial
+charged groups that facilitate cationic selectivity}
 \label{fig:ompF-charges}
 \end{figure}
-The student is supposed to address all the points of the assignment described above,
-but has the freedom to focus in discussing details of methodology and selected
-approaches either to the “Analysis of Umbrella Sampling Simulations” or to the
-“Analysis of the non-equilibrium molecular dynamics simulations with external electric
-field”.
+\begin{figure}[H]
+	\centering{}
+	\captionsetup{justification=centering}
+	\includegraphics[scale=0.47]{conductance}
+\caption{Conductance estimates $G$ from ensemble trajectories \\
+for anions and cations across ompF under various applied voltages $V$ }
+\label{fig:conductance}
+\end{figure}
+
+\subsection{Conductance estimates from molecular dynamics}
+Classical force field molecular dynamics with an extental electric field was
+used to estimate the conductance of ompF. The structure of ompF was embedded
+in a lipid bilayer, surrounded by a water, Potassium $\mathrm{K^{+}}$ and
+Chloride $\mathrm{Cl^{-}}$ ions. Simulations were run for up to 100ns with
+external fields given by $V=\pm100\mathrm{mV},\pm200\mathrm{mV},\pm1\mathrm{V}$.
+The translocated anionic and cationic charge $q(t)$ was recorded as a function of time.
+Several trajectories for a given paramerer set where run to obtain a mean and
+uncertainty. The cationic/anionic conductance $G_{\pm}$ was estimated via least squares according to
+the formula
+\begin{align}
+	q(t)=G_{\pm}|V|t
+\end{align}
+Results summarised in Figure \ref{fig:conductance} show mean and standard
+deviation for each trajectory ensemble. The claim of cationic selectivity
+\cite{Benz1985} is supported as $|G_{+}|>|G_{-}|$ for all estimates and
+applied voltages. Estimated conductances also share the same order of
+magnitude as those reported in literature \cite{Benz1985}.
+
 \bibliography{mendeley_v2}
 \bibliographystyle{ieeetr}
 \end{document}
