@@ -21,6 +21,8 @@
 \usepackage{booktabs,array,multirow,braket}
 \usepackage{amsfonts,amsmath,amssymb,mathbbol,calc}
 \usepackage{subfigure,color,blindtext,enumitem,siunitx}
+\usepackage[dvipsnames]{xcolor}
+
 \usepackage[colorinlistoftodos]{todonotes}
 
 \usepackage{mathtools}
@@ -44,7 +46,7 @@
 \begin{document}
 
 \title{
-Time-series segmentation and latent\\ representation of musical instruments
+Nonequilibrium Molecular Dynamics
 }
 
 \author{Gregory Szep}
@@ -52,25 +54,87 @@ Time-series segmentation and latent\\ representation of musical instruments
 \date{\today}
 \maketitle
 
-\abstract{dd}
 \section{scientific publication}
 Select a scientific publication about non-equilibrium molecular dynamics of
 biomolecules and discuss its relevance respect to the course you attended and
 this research assignment.
-
+\pagebreak
 \section{Unfolding proteins with umbrella sampling}
-Every student has access to the raw data of umbrella sampling simulations for
-two systems. These umbrella sampling simulations have been ran having the
-aim to calculate the Potential of Mean Force (PMF) of the mechanical unfolding
-of two peptides: one being in the initial conformational state of an a-helix; the
-other being in the initial conformational state of a b-hairpin. Every student is
-supposed to calculate the PMF for both the systems
-\subsection{Describe the simulated systems and the type of performed simulations you
-analyze}
-\subsection{Calculate and display (plot) the PMF for the two systems. Explore the
-relevance of the bootstrap parameter respect to evaluation of the PMF’s error
-using the script g_wham_script_new.x}
 
+\subsection{Structure and unfolding of $\alpha$-helix and $\beta$-hairpin}
+Umbrella sampling is a technique in molecular dynamics with which one can
+efficiently estimate the free energy surface $E(r)$ of a molecule --- referred to as the
+\textit{potential of mean force} along a chosen reaction coordinate $r$. The
+reaction coordinate $r$ is typically a nonlinear function of a large configuration
+space $x\in\mathbb{R}^M$.
+\\\\
+To enhance sampling in the reaction coordinate $r$, an artifical \textit{umbrella
+potential} $V(r)$ is added to the native classical force fields $U(x)$ to bias the molecule
+configuration $x$ towards a fixed value of the reaction coordinate $r=f(x)$.
+The molecule is allowed to explore the configuration space $x$ in the vicinity of
+this value and the \textit{potential of mean force} is estimated from the resulting
+trajectory, which is treated as an ergodic ensemble. For finite temperature $\beta$
+\begin{align}
+	E(r)= -\frac{1}{\beta}\ln\big\langle
+	\delta\left(r-f(x)\right)
+	\big\rangle_{U(x)+V\circ f(x)}
+		-V(r)
+		+\mathrm{const}
+\end{align}
+Empirically the expectation $\langle\delta\left(r-f(x)\right)\rangle_{U(x)+V\circ f(x)}$
+is nothing but the histogram of $r$ over a trajectoy biased by a fixed $V(r)$. This
+locally estimates $E(r)$. For a sufficiently highly resolved grid in $r$ these
+local estimates can be vertically aligned to form a global estimate of $E(r)$.
+Highly resolved $r$-grids require more molecular dynamics runs and thus
+are computationally expensive. The weighted histogram analysis method (WHAM)
+is used to estimate intermediate values of $E(r)$ given a lower resolution grid,
+whos $r$ histograms still sufficiently overlap.
+\\\\
+In the case of unfolding of the $\alpha$-helix and $\beta$-hairpin
+the reaction coordinate is the end-to-end distance of the protein. A harmonic
+potential is used to keep the ends of the protein a fixed distance apart for
+each ensemble. We expect the breaking of bonds and deformation of structure
+as $r$ increases.
+Figure \ref{fig:unfold} reveals the structure of typical conformations of both
+proteins for ensembles along the reaction coordinate and Figure \ref{fig:hydrogen}
+quantifies unfolding in terms of the histograms of intra-protein hydrogen bonds
+$n(r)$ with respect to local histograms of $r$.
+
+\begin{figure}[H]
+	\centering{}
+	\captionsetup{justification=centering}
+	\includegraphics[scale=0.21]{hairpin-1}
+	\includegraphics[scale=0.21]{hairpin-2}
+	\includegraphics[scale=0.21]{hairpin-3}
+	\includegraphics[scale=0.35]{helix-1}
+	\includegraphics[scale=0.35]{helix-2}
+	\includegraphics[scale=0.35]{helix-3}
+\caption{Structures of $\beta$-hairpin (top) and $\alpha$-helix (bottom)
+from\\ ensembles of increasing reaction coordinate from left to right}
+\label{fig:unfold}
+\end{figure}
+\begin{figure}[H]
+	\centering{}
+	\captionsetup{justification=centering}
+	\includegraphics[scale=0.5]{hydrogen}
+\caption{Boxes represent biased ensembles of $\color{NavyBlue}{\beta\mathrm{-hairpin}}$ and
+$\color{orange}{\alpha\mathrm{-helix}}$\\centered at the means and bounded by standard
+deviations of $n(r)$ and $r$}
+\label{fig:hydrogen}
+\end{figure}
+\pagebreak
+Figure \ref{fig:hydrogen} reveals the patchy overlap between adjacent ensembles
+the reaction coordinate $r$ and its negative correlation with number of hydrogen
+bonds $n(r)$. The transient increase in hydrogen bonds in the $\beta$-hairpin at
+around $12\mathrm{\AA}$ may indicate a metastable fold state. While the breaking
+of a hydrogen bond does contribute to the increase $E(r)$ by
+$1-3\mathrm{kcal\,mol^{-1}}$ and may account for an increase of up to
+$\sim21\mathrm{kcal\,mol^{-1}}$ as seen in Figure \ref{fig:pmf}, the large
+uncertainties do not allow us to confidently say those are the only energetic
+contributions. Perhaps contributions may come from the deformation of non-bonded
+interactions between residues; this can be confirmed with a Ramachandran plot.
+
+\subsection{Potential mean force and bootstraping}
 Bootstrapping is a resampling method that quantifies statistical uncertainty by
 dividing the data into $N$ subsets, hence without additional measruements
 uncertainty is obtained by \textit{pulling the data up by its own bootstraps}.
@@ -81,13 +145,38 @@ with $N$ as a hyperparameter.
 This hyperparameter is subject to the bias-variance trade-off. Chooseing a large
 $N$ results in relatively unbiased and uncertain estimates, while a small number
 of subsets give rise to more certain yet biased estimates. The former is
-preferred but comes with a computational cost. It appears that the uncertainty
-bounds converge to a fixed value after around $N\geq20$ so there is little sense
-in setting $N$ at any other value than $N=20$.
-
-\subsection{Quantify and discuss the histograms’ overlap as
-obtained from the analysis of the umbrella sampling simulations}
-\pagebreak
+preferred but comes with a computational cost. According to Figure
+\ref{fig:bootstrap} it appears that the uncertainty bounds converge to a fixed
+value after around $N\geq20$ so there is little sense in setting $N$ at any
+other value than $N=20$.
+\\\\
+Figure \ref{fig:pmf} shows the increasing potential of mean force $E(r)$ with
+platauing regions that coincide with the transient increases in hydrogen bonds
+in Figure \ref{fig:hydrogen}. This confirms the existence of metastable states.
+The sharp increase in $E(r)$ for the $\beta$-hairpin at $\sim7\mathrm{\AA}$
+corresponds to the unpinning of the hairpin, followed by steady deformations
+leading to a metastable state, which is followed by further deformations. Finally at
+$\sim35\mathrm{\AA}$ the potential becomes harmonic which corresponding to the
+stretching of covalent bonds. An artifact at $\sim38\mathrm{\AA}$ for the
+$\alpha$-helix can be seen, possibly due to a jump across the periodic boundary
+conditions.
+\begin{figure}[H]
+	\centering{}
+	\captionsetup{justification=centering}
+	\includegraphics[scale=0.41]{bootstrap}
+\caption{Standard deviation of potential of mean force $\sigma(N)$ as a \\function of bootstrap parameter $N$
+for the $\color{NavyBlue}{\beta\mathrm{-hairpin}}$ and $\color{orange}{\alpha\mathrm{-helix}}$}
+\label{fig:bootstrap}
+\end{figure}
+\begin{figure}[H]
+	\centering{}
+	\captionsetup{justification=centering}
+	\includegraphics[scale=0.41]{pmf}
+\caption{Potential mean force $E(r)$ estimated by WHAM with bootstrap parameter\\$N=20$
+as a function of reaction coordinate $r$
+for the $\color{NavyBlue}{\beta\mathrm{-hairpin}}$ and $\color{orange}{\alpha\mathrm{-helix}}$}
+\label{fig:pmf}
+\end{figure}
 \section{Conductance of a porin}
 \vspace{-5pt}
 \subsection{Structure and function}
@@ -100,7 +189,7 @@ cations.
 \begin{figure}[H]
 	\centering{}
 	\captionsetup{justification=centering}
-	\includegraphics[scale=0.5]{ompf}
+	\includegraphics[scale=0.4]{ompf}
 \caption{Side-view of ompF: $\beta$-barrel homotrimer forms transmembrane channel.\\
 Highlighted are polar residues, which dominanate the outer membrane side.}
 \label{fig:ompF}
