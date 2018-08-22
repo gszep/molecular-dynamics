@@ -1,10 +1,10 @@
-# This file was created Tue Aug 14 12:33:18 2018
+# This file was created Wed Aug 22 18:46:43 2018
 # by the following command:
-# g_wham -it tpr-files.dat -if pullf-files.dat -o pmf.xvg -hist -unit kCal -v -nBootstrap 20 
+# g_wham -it tpr-files.dat -if pullf-files.dat -o pmf.xvg -hist -unit kCal -v -nBootstrap 100 -tol 1e-5 
 #
 # g_wham is part of G R O M A C S:
 #
-# GRowing Old MAkes el Chrono Sweat
+# Gromacs Runs One Microsecond At Cannonball Speeds
 #
 @    title "Umbrella histograms"
 @    xaxis  label "z"

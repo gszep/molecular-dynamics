@@ -49,15 +49,23 @@
 Nonequilibrium Molecular Dynamics
 }
 
-\author{Gregory Szep}
+\author{Student 1118161}
 \affil{King's College London}
 \date{\today}
 \maketitle
 
-\section{scientific publication}
-Select a scientific publication about non-equilibrium molecular dynamics of
-biomolecules and discuss its relevance respect to the course you attended and
-this research assignment.
+\section{Simulating the HIV-1 capsid}
+The human immunodeficiency virus type 1 (HIV-1) infection is highly dependent on
+its capsid. All-atom simulations of the capsid may reveal molecular properties
+that can be targeted to treat the infection.
+\begin{figure}[H]
+	\centering{}
+	\captionsetup{justification=centering}
+	\includegraphics[scale=0.21]{hiv}
+\caption{Chloride ion translocation through hexamers that form the HIV-1 capsid}
+\label{fig:hiv}
+\end{figure}
+Simulations where ran \cite{Perilla2017}, numbers appeared, statements were published. Blah.
 \pagebreak
 \section{Unfolding proteins with umbrella sampling}
 
@@ -101,8 +109,8 @@ quantifies unfolding in terms of the histograms of intra-protein hydrogen bonds
 $n(r)$ with respect to local histograms of $r$. Hydorgen bonds were counted
 using \code{MDAnalysis.analysis.hbonds.HydrogenBondAnalysis} code in Python with
 a distance cutoff of $3\mathrm{\AA}$. End-to-end distance was calculated with
-\code{MDAnalysis.analysis.distances.dist} between the N- and C-terminus.
-
+\code{MDAnalysis.analysis.distances.dist} between the N- and C-terminus;
+relevant code is avaialble on Github \cite{github}.
 \begin{figure}[H]
 	\centering{}
 	\captionsetup{justification=centering}
@@ -171,7 +179,9 @@ other value than $N=20$.
 \\\\
 Figure \ref{fig:pmf} shows the increasing potential of mean force $E(r)$ with
 platauing regions that coincide with the transient increases in hydrogen bonds
-in Figure \ref{fig:hydrogen}. This confirms the existence of metastable states.
+for the $\beta$-hairpin
+in Figure \ref{fig:hydrogen}. This confirms the existence of metastable states for
+$\beta$-hairpin, and lack of them in the $\alpha$-helix.
 The sharp increase in $E(r)$ for the $\beta$-hairpin at $\sim7\mathrm{\AA}$
 corresponds to the unpinning of the hairpin, followed by steady deformations
 leading to a metastable state, which is followed by further deformations. Finally at
