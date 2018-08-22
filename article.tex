@@ -98,7 +98,10 @@ as $r$ increases.
 Figure \ref{fig:unfold} reveals the structure of typical conformations of both
 proteins for ensembles along the reaction coordinate and Figure \ref{fig:hydrogen}
 quantifies unfolding in terms of the histograms of intra-protein hydrogen bonds
-$n(r)$ with respect to local histograms of $r$.
+$n(r)$ with respect to local histograms of $r$. Hydorgen bonds were counted
+using \code{MDAnalysis.analysis.hbonds.HydrogenBondAnalysis} code in Python with
+a distance cutoff of $3\mathrm{\AA}$. End-to-end distance was calculated with
+\code{MDAnalysis.analysis.distances.dist} between the N- and C-terminus.
 
 \begin{figure}[H]
 	\centering{}
@@ -123,7 +126,8 @@ deviations of $n(r)$ and $r$}
 \label{fig:hydrogen}
 \end{figure}
 \pagebreak
-Figure \ref{fig:hydrogen} reveals the patchy overlap between adjacent ensembles
+Figure \ref{fig:hydrogen} reveals the patchy overlap for $\beta$-hairpin and
+good overlap for $\alpha$-helix between adjacent ensembles
 the reaction coordinate $r$ and its negative correlation with number of hydrogen
 bonds $n(r)$. The transient increase in hydrogen bonds in the $\beta$-hairpin at
 around $12\mathrm{\AA}$ may indicate a metastable fold state. While the breaking
@@ -131,9 +135,24 @@ of a hydrogen bond does contribute to the increase $E(r)$ by
 $1-3\mathrm{kcal\,mol^{-1}}$ and may account for an increase of up to
 $\sim21\mathrm{kcal\,mol^{-1}}$ as seen in Figure \ref{fig:pmf}, the large
 uncertainties do not allow us to confidently say those are the only energetic
-contributions. Perhaps contributions may come from the deformation of non-bonded
-interactions between residues; this can be confirmed with a Ramachandran plot.
-
+contributions. The Ramachandran plots in
+Figure \ref{fig:ramachandran} reveal contributions from the deformation of non-bonded
+interactions between residues. The two islands of stability that define $\beta$-hairpin's
+loop dissappear, while the larger island defining the $\beta$-sheet remains largely
+intact. The island defining the $\alpha$-helix dissappears too, leaving the
+protein in a $\beta$-sheet-like confirmational state.
+\begin{figure}[H]
+	\centering{}
+	\captionsetup{justification=centering}
+	\includegraphics[scale=0.3]{dihedrals-1}
+	\includegraphics[scale=0.3]{dihedrals-2}
+	\includegraphics[scale=0.3]{dihedrals-3}
+	\includegraphics[scale=0.3]{dihedrals-4}
+\caption{Folded (left) and unfolded (right) conformations of
+$\color{NavyBlue}{\beta\mathrm{-hairpin}}$ and $\color{orange}{\alpha\mathrm{-helix}}$\\
+revealling the disappearance of islands that define the secondary structure}
+\label{fig:ramachandran}
+\end{figure}
 \subsection{Potential mean force and bootstraping}
 Bootstrapping is a resampling method that quantifies statistical uncertainty by
 dividing the data into $N$ subsets, hence without additional measruements
